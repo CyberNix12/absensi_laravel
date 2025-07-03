@@ -1,0 +1,14 @@
+{
+  "tabWidth": 2,
+  "useTabs": false,
+  "printWidth": 180,
+  "plugins": ["prettier-plugin-blade"],
+  "overrides": [
+    {
+      "files": ["*.php"],
+      "options": {
+        "parser": "blade"
+      }
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "preset": "laravel",
+  "rules": {
+    "simplified_null_return": true,
+    "array_indentation": false
+  },
+  "exclude": ["storage", "node_modules"]
+}

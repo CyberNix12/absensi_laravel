@@ -1,0 +1,131 @@
+.
+├── .github/
+│   └── workflows/
+│       ├── lint.yml
+│       └── tests.yml
+├── app/
+│   ├── Exports/
+│   │   └── PresensiExport.php           # (rename dari AbsensiExport)
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   ├── Auth/
+│   │   │   │   └── VerifyEmailController.php
+│   │   │   ├── Controller.php
+│   │   │   ├── PresensiController.php          # (rename & revisi dari DataAbsensiController)
+│   │   │   ├── KaryawanController.php
+│   │   │   ├── PengajuanIzinController.php     # NEW: untuk izin/sakit/cuti
+│   │   ├── Middleware/
+│   │   │   ├── AdminMiddleware.php
+│   │   │   ├── ManagerMiddleware.php           # NEW: untuk akses manager saja
+│   │   │   ├── ForceHttps.php
+│   │   │   └── RoleMiddleware.php              # GENERIC, jika ingin pakai middleware role:[...]
+│   │   ├── Requests/
+│   │   │   ├── KaryawanEditRequest.php
+│   │   │   ├── KaryawanRequest.php
+│   │   │   └── PengajuanIzinRequest.php        # NEW: validasi form izin/sakit/cuti
+│   │   ├── Resources/
+│   │   │   ├── PresensiResource.php            # (rename dari DataAbsensiResource.php)
+│   ├── Livewire/
+│   │   ├── Actions/
+│   │   │   └── Logout.php
+│   ├── Models/
+│   │   ├── Presensi.php                        # (rename dari Absensi.php)
+│   │   ├── PengajuanIzin.php                   # NEW: model izin/sakit/cuti
+│   │   └── User.php
+│   ├── Providers/
+│   │   ├── AppServiceProvider.php
+│   │   └── VoltServiceProvider.php
+├── bootstrap/
+├── config/
+├── database/
+│   ├── factories/
+│   │   └── UserFactory.php
+│   ├── migrations/
+│   │   ├── 0001_01_01_000000_create_users_table.php
+│   │   ├── 2025_04_22_215053_create_presensis_table.php      # (rename dari absensis)
+│   │   ├── 2025_07_02_220127_create_pengajuan_izin_table.php # untuk izin/sakit/cuti
+│   ├── seeders/
+│   │   └── DatabaseSeeder.php
+│   └── .gitignore
+├── public/
+├── resources/
+│   ├── css/
+│   ├── js/
+│   ├── views/
+│   │   ├── components/
+│   │   │   ├── cards/
+│   │   │   │   ├── presensi.blade.php          # (rename dari absensi)
+│   │   │   │   ├── base-card.blade.php
+│   │   │   │   ├── counter.blade.php
+│   │   │   ├── layouts/
+│   │   │   │   ├── app/
+│   │   │   │   │   ├── header.blade.php
+│   │   │   │   │   ├── sidebar.blade.php
+│   │   │   │   ├── auth/
+│   │   │   │   │   ├── card.blade.php
+│   │   │   │   │   ├── simple.blade.php
+│   │   │   │   │   ├── split.blade.php
+│   │   │   │   ├── app.blade.php
+│   │   │   │   ├── auth.blade.php
+│   │   │   ├── settings/
+│   │   │   │   ├── layout.blade.php
+│   │   │   ├── action-message.blade.php
+│   │   │   ├── app-logo-icon.blade.php
+│   │   │   ├── app-logo.blade.php
+│   │   │   ├── auth-header.blade.php
+│   │   │   ├── auth-session-status.blade.php
+│   │   │   ├── page-title.blade.php
+│   │   │   ├── placeholder-pattern.blade.php
+│   │   ├── excel/
+│   │   │   ├── data-presensi.blade.php         # (rename dari data-absensi)
+│   │   ├── livewire/
+│   │   │   ├── auth/
+│   │   │   │   ├── confirm-password.blade.php
+│   │   │   │   ├── forgot-password.blade.php
+│   │   │   │   ├── login.blade.php
+│   │   │   │   ├── register.blade.php
+│   │   │   │   ├── reset-password.blade.php
+│   │   │   │   ├── verify-email.blade.php
+│   │   │   ├── settings/
+│   │   │   │   ├── appearance.blade.php
+│   │   │   │   ├── delete-user-form.blade.php
+│   │   │   │   ├── password.blade.php
+│   │   │   │   ├── profile.blade.php
+│   │   │   ├── dashboard.blade.php
+│   │   │   ├── manager/
+│   │   │   │   └── rekap-kehadiran.blade.php           # NEW: untuk manager lihat rekap
+│   │   │   ├── pengajuan-izin/
+│   │   │   │   ├── index.blade.php
+│   │   │   │   ├── create.blade.php
+│   │   │   │   ├── rekap.blade.php
+│   │   ├── pages/
+│   │   │   ├── data-presensi-karyawan-in.blade.php     # (rename dari data-absensi-...)
+│   │   │   ├── data-presensi-karyawan-out.blade.php
+│   │   │   ├── data-presensi-karyawan.blade.php
+│   │   │   ├── data-presensi.blade.php
+│   │   │   ├── karyawan-create.blade.php
+│   │   │   ├── karyawan-edit.blade.php
+│   │   │   ├── karyawan-reset-password.blade.php
+│   │   │   ├── karyawan.blade.php
+│   │   ├── dashboard.blade.php
+│   │   ├── welcome.blade.php
+├── routes/
+│   ├── web.php
+│   ├── auth.php
+│   ├── console.php
+├── tests/
+│   ├── Feature/
+│   │   ├── Auth/
+│   │   ├── Settings/
+│   │   ├── DashboardTest.php
+│   │   ├── ExampleTest.php
+│   ├── Unit/
+│   │   ├── ExampleTest.php
+│   ├── Pest.php
+│   ├── TestCase.php
+├── .env
+├── artisan
+├── composer.json
+├── package.json
+├── vite.config.js
+└── ... (file dan folder lainnya)

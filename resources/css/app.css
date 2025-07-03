@@ -1,0 +1,158 @@
+@import "tailwindcss";
+@import "flyonui/src/vendor/flatpickr.css";
+
+@plugin "flyonui" {
+  themes:
+    light --default,
+    flux --prefersdark,
+    flux;
+}
+
+@import "flyonui/variants.css";
+@source "../node_modules/flyonui/flyonui.js";
+
+@import "../../vendor/livewire/flux/dist/flux.css";
+
+@source '../views';
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../vendor/livewire/flux-pro/stubs/**/*.blade.php';
+@source '../../vendor/livewire/flux/stubs/**/*.blade.php';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+  --color-zinc-50: #fafafa;
+  --color-zinc-100: #f5f5f5;
+  --color-zinc-200: #e5e5e5;
+  --color-zinc-300: #d4d4d4;
+  --color-zinc-400: #a3a3a3;
+  --color-zinc-500: #737373;
+  --color-zinc-600: #525252;
+  --color-zinc-700: #404040;
+  --color-zinc-800: #262626;
+  --color-zinc-900: #171717;
+  --color-zinc-950: #0a0a0a;
+
+  --color-accent: var(--color-neutral-800);
+  --color-accent-content: var(--color-neutral-800);
+  --color-accent-foreground: var(--color-white);
+}
+
+@layer theme {
+  .dark {
+    --color-accent: var(--color-white);
+    --color-accent-content: var(--color-white);
+    --color-accent-foreground: var(--color-neutral-800);
+  }
+}
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+[data-flux-field]:not(ui-radio, ui-checkbox) {
+  @apply grid gap-2;
+}
+
+[data-flux-label] {
+  @apply !mb-0 !leading-tight;
+}
+
+input:focus[data-flux-control],
+textarea:focus[data-flux-control],
+select:focus[data-flux-control] {
+  @apply outline-hidden ring-2 ring-accent ring-offset-2 ring-offset-accent-foreground;
+}
+
+/* \[:where(&)\]:size-4 {
+    @apply size-4;
+} */
+
+@plugin "flyonui/theme" {
+  name: "flux";
+  default: true;
+  prefersdark: true;
+  color-scheme: "dark";
+  --color-base-100: oklch(36% 0 0);
+  --color-base-200: #262626;
+  --color-base-300: oklch(36% 0 0);
+  --color-base-content: oklch(98% 0.003 247.858);
+  --color-primary: oklch(69% 0.17 162.48);
+  --color-primary-content: oklch(97% 0.021 166.113);
+  --color-secondary: oklch(44% 0.017 285.786);
+  --color-secondary-content: oklch(96% 0.018 272.314);
+  --color-accent: oklch(72% 0.219 149.579);
+  --color-accent-content: oklch(98% 0.018 155.826);
+  --color-neutral: oklch(68% 0.162 75.834);
+  --color-neutral-content: oklch(98% 0.026 102.212);
+  --color-info: oklch(58% 0.158 241.966);
+  --color-info-content: oklch(97% 0.013 236.62);
+  --color-success: oklch(59% 0.145 163.225);
+  --color-success-content: oklch(97% 0.021 166.113);
+  --color-warning: oklch(64% 0.222 41.116);
+  --color-warning-content: oklch(98% 0.016 73.684);
+  --color-error: oklch(58% 0.253 17.585);
+  --color-error-content: oklch(96% 0.015 12.422);
+  --radius-selector: 1rem;
+  --radius-field: 0.5rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.21875rem;
+  --size-field: 0.21875rem;
+  --border: 2px;
+  --depth: 1;
+  --noise: 0;
+}
+
+.card {
+  @apply bg-white dark:bg-neutral-700 border-1 border-base-100 text-base-300 dark:text-white;
+}
+
+.card-title {
+  @apply text-base-100 dark:text-white;
+}
+
+.label-text {
+  @apply text-base-100 dark:text-white;
+}
+
+.input {
+  @apply bg-neutral-100 dark:bg-neutral-600 text-base-300 dark:text-white placeholder:text-neutral-400 dark:placeholder:text-neutral-400;
+}
+
+table {
+  thead {
+    tr {
+      th {
+        @apply text-base-300 dark:text-white font-semibold dark:!bg-neutral-800;
+      }
+    }
+  }
+}
+
+.modal-content {
+  @apply !bg-neutral-100 dark:!bg-neutral-600;
+
+  .modal-title {
+    @apply !text-base-300 dark:!text-white;
+  }
+}
+
+.radio {
+  @apply border-neutral-300 p-0.5;
+
+  &:checked {
+    @apply bg-neutral-400;
+
+    &::before {
+      @apply bg-accent;
+    }
+  }
+}
