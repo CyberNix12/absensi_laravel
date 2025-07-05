@@ -2,5 +2,5 @@
     <x-app-logo-icon class="size-5 fill-current text-black dark:text-white" />
 </div>
 <div class="ms-1 grid flex-1 text-start text-sm">
-    <span class="mb-0.5 truncate leading-none font-semibold text-base-300 dark:text-neutral-300">CTB</span>
+    <span class="mb-0.5 truncate leading-none font-semibold text-base-300 dark:text-neutral-300">Absensi</span>
 </div>

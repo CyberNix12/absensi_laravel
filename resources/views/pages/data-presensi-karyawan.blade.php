@@ -26,6 +26,11 @@
                                         <td colspan="7" class="text-center py-4">Tidak ada data presensi</td>
                                     </tr>
                                 @endif
+                                {{-- @if ( $datas->isEmpty())
+                                    <tr>
+
+                                    </tr>
+                                @endif --}}
                                 @foreach ($datas as $presensi)
                                     <tr>
                                         <td class="text-center">{{ $loop->iteration }}</td>

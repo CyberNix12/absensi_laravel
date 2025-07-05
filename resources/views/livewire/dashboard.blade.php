@@ -44,6 +44,7 @@ new #[Layout('components.layouts.app')] #[Title('Dashboard')] class extends Comp
             $this->daftar_masuk_hari_ini = $this->getDaftarMasukHariIni();
             $this->daftar_pulang_hari_ini = $this->getDaftarPulangHariIni();
         } elseif ($user->role === 'manager') {
+            $this->total_kehadiran = $this->hitungTotalKehadiran();
             $this->total_karyawan = $this->hitungKaryawan();
             $this->rekap_izin = $this->hitungRekapIzin('izin');
             $this->rekap_sakit = $this->hitungRekapIzin('sakit');
@@ -246,6 +247,7 @@ new #[Layout('components.layouts.app')] #[Title('Dashboard')] class extends Comp
         {{-- === MANAGER DASHBOARD === --}}
         @if(auth()->user()->role == 'manager')
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <x-cards.counter variant="primary" title="Total Kehadiran" total="{{ $total_kehadiran }}" icon="fas fa-user-check" />
                 <x-cards.counter variant="accent" title="Total Karyawan" total="{{ $total_karyawan }}" icon="fas fa-users" />
                 <x-cards.counter variant="success" title="Rekap Izin" total="{{ $rekap_izin }}" icon="fas fa-user-clock" />
                 <x-cards.counter variant="danger" title="Rekap Sakit" total="{{ $rekap_sakit }}" icon="fas fa-user-injured" />

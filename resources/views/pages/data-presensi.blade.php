@@ -2,18 +2,18 @@
     <section class="w-full h-full">
         <x-page-title :title="$title" />
 
-        {{-- Hapus tombol presensi masuk dan pulang untuk admin --}}
-        @if (auth()->user()->role !== 'admin')
+        {{-- Tombol presensi hanya untuk karyawan --}}
+        @if (auth()->user()->role === 'karyawan')
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-5">
-                <x-cards.presensi variant="primary" title="Jam Masuk" text="{{ $jam_masuk }}" icon="fas fa-sign-in"
-                    url="{{ route('data-presensi.in') }}" />
-                <x-cards.presensi variant="danger" title="Jam Pulang" text="{{ $jam_pulang }}" icon="fas fa-sign-out"
-                    url="{{ route('data-presensi.out') }}" />
+                <x-cards.presensi variant="primary" title="Jam Masuk" :text="$jam_masuk" icon="fas fa-sign-in"
+                    :url="route('data-presensi.in')" />
+                <x-cards.presensi variant="danger" title="Jam Pulang" :text="$jam_pulang" icon="fas fa-sign-out"
+                    :url="route('data-presensi.out')" />
             </div>
         @endif
 
         <div class="flex flex-col gap-4">
-            @if (auth()->user()->role == 'admin')
+            @if (in_array(auth()->user()->role, ['admin', 'manager']))
                 <div class="card w-full md:max-w-sm">
                     <div class="card-header">
                         <h5 class="card-title">Filter</h5>
@@ -24,25 +24,21 @@
                                 <label class="label-text" for="from_date">Dari Tanggal</label>
                                 <input type="date" class="input" id="from_date" name="from_date"
                                     value="{{ $from_date }}" required />
-                                <div>
-                                    @error('from_date')
-                                        <span class="error">{{ $message }}</span>
-                                    @enderror
-                                </div>
+                                @if ($errors->has('from_date'))
+                                    <span class="text-danger">{{ $errors->first('from_date') }}</span>
+                                @endif
                             </div>
                             <div>
                                 <label class="label-text" for="to_date">Sampai Tanggal</label>
                                 <input type="date" class="input" id="to_date" name="to_date"
                                     value="{{ $to_date }}" required />
-                                <div>
-                                    @error('to_date')
-                                        <span class="error">{{ $message }}</span>
-                                    @enderror
-                                </div>
+                                @if ($errors->has('to_date'))
+                                    <span class="text-danger">{{ $errors->first('to_date') }}</span>
+                                @endif
                             </div>
                             <div>
                                 <label class="label-text" for="keyword">Karyawan</label>
-                                <input type="text" class="input " id="keyword" name="keyword"
+                                <input type="text" class="input" id="keyword" name="keyword"
                                     placeholder="Nama Karyawan" value="{{ $keyword }}" />
                             </div>
                             <div>
@@ -55,18 +51,18 @@
                     </div>
                 </div>
             @endif
+
             <div class="card">
                 @if (auth()->user()->role == 'admin')
                     <div class="card-header flex justify-between items-center">
-                        <div class="flex items-center gap-2">
-                            <a href="{{ route('data-presensi.rekap', ['from_date' => $from_date, 'to_date' => $to_date, 'keyword' => $keyword]) }}"
-                                target="_blank" class="btn btn-primary">
-                                <i class="fas fa-calendar"></i>
-                                Rekap Data
-                            </a>
-                        </div>
+                        <a href="{{ route('data-presensi.rekap', ['from_date' => $from_date, 'to_date' => $to_date, 'keyword' => $keyword]) }}"
+                            target="_blank" class="btn btn-primary">
+                            <i class="fas fa-calendar"></i>
+                            Rekap Data
+                        </a>
                     </div>
                 @endif
+
                 <div class="card-body">
                     <div class="w-full overflow-x-auto">
                         <table class="table table-sm">
@@ -79,9 +75,7 @@
                                     <th class="text-center">Jam Pulang</th>
                                     <th class="text-center">Lama Kerja</th>
                                     <th class="text-center">Lokasi</th>
-                                    <th class="text-center">
-                                        <i class="fas fa-cog"></i>
-                                    </th>
+                                    <th class="text-center"><i class="fas fa-cog"></i></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -90,6 +84,7 @@
                                         <td colspan="8" class="text-center py-4">Tidak ada data presensi</td>
                                     </tr>
                                 @endif
+
                                 @foreach ($datas as $presensi)
                                     <tr>
                                         <td class="text-center">{{ $loop->iteration }}</td>
@@ -103,16 +98,14 @@
                                                 @if ($presensi->jam_masuk)
                                                     <a href="{{ $presensi->lokasi_masuk_gmap }}" target="_blank"
                                                         class="btn btn-sm btn-info">
-                                                        <i class="fas fa-map-marker"></i>
-                                                        Lokasi Masuk
+                                                        <i class="fas fa-map-marker"></i> Lokasi Masuk
                                                     </a>
                                                 @endif
 
                                                 @if ($presensi->jam_pulang)
                                                     <a href="{{ $presensi->lokasi_pulang_gmap }}" target="_blank"
                                                         class="btn btn-sm btn-warning">
-                                                        <i class="fas fa-map-marker"></i>
-                                                        Lokasi Pulang
+                                                        <i class="fas fa-map-marker"></i> Lokasi Pulang
                                                     </a>
                                                 @endif
                                             </div>
@@ -128,6 +121,7 @@
                             </tbody>
                         </table>
                     </div>
+
                     <div class="mt-4">
                         {{ $datas->links() }}
                     </div>
@@ -138,7 +132,7 @@
 
     @push('modals')
         <div id="modal-detail"
-            class="overlay modal overlay-open:opacity-100 overlay-open:duration-300 hidden [--is-layout-affect:true] overlay-backdrop-open:bg-neutral-800/80 "
+            class="overlay modal overlay-open:opacity-100 overlay-open:duration-300 hidden [--is-layout-affect:true] overlay-backdrop-open:bg-neutral-800/80"
             role="dialog" tabindex="-1">
             <div class="modal-dialog overlay-open:opacity-100 overlay-open:duration-300 !bg-transparent">
                 <div class="modal-content">
@@ -157,11 +151,4 @@
             </div>
         </div>
     @endpush
-
-    {{-- @vite('resources/js/modal_presensi.js'); --}}
-    {{-- @push('scripts')
-        <script type="module">
-            showModalDetail(1)
-        </script>
-    @endpush --}}
 </x-layouts.app>
